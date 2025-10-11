@@ -20,8 +20,10 @@ from Scripts.analizador_inflacion_pibreal import AnalizadorInflacionPIBReal, Ana
 class InterfazAnalisisPIB:
     def __init__(self, root):
         self.root = root
+        self.root.state('zoomed')
         self.root.title("Dashboard Económico Completo - Análisis del PIB e Inflación - República Dominicana")
-        self.root.geometry("1400x900")
+        self.root.geometry("1200x700")
+        self.root.minsize(1200, 700)
         self.root.configure(bg="#f4f6f8")
 
         # Instancias de los analizadores
@@ -47,56 +49,78 @@ class InterfazAnalisisPIB:
         # === Estilo general ===
         self.configurar_estilos()
 
-        # === Marco principal ===
+        # === REORGANIZACIÓN: Marco principal con estructura fija ===
         self.frame_principal = ttk.Frame(root)
         self.frame_principal.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # === Panel izquierdo: controles y texto de salida ===
-        frame_izq = ttk.Frame(self.frame_principal)
-        frame_izq.pack(side="left", fill="both", expand=True, padx=(0, 10))
+        # === BARRA SUPERIOR FIJA CON CONTROLES PERMANENTES ===
+        self.frame_controles_superior = ttk.Frame(self.frame_principal)
+        self.frame_controles_superior.pack(fill="x", pady=(0, 0))
+        
+        # Estado de la aplicación
+        self.label_estado = ttk.Label(self.frame_controles_superior, text="Estado: Esperando carga de datos...",
+                                     foreground="red", font=("Segoe UI", 9, "bold"))
+        self.label_estado.pack(side="left", padx=(0, 20))
+        
+        # Controles permanentes
+        frame_botones_permanentes = ttk.Frame(self.frame_controles_superior)
+        frame_botones_permanentes.pack(side="right")
+        
+        ttk.Button(frame_botones_permanentes, text=" Guardar Gráfico",
+                  command=self.guardar_grafico).pack(side="left", padx=5)
+        ttk.Button(frame_botones_permanentes, text=" Limpiar Todo",
+                  command=self.limpiar_todo).pack(side="left", padx=5)
+        ttk.Button(frame_botones_permanentes, text=" Salir",
+                  command=self.root.destroy).pack(side="left", padx=5)
 
-        # Panel de controles
+        # === CONTENEDOR PRINCIPAL (sidebar + área visualización) ===
+        self.frame_contenedor = ttk.Frame(self.frame_principal)
+        self.frame_contenedor.pack(fill="both", expand=True)
+
+        # === Panel izquierdo: controles y texto de salida ===
+        frame_izq = ttk.Frame(self.frame_contenedor, width=300)
+        frame_izq.pack(side="left", fill="both", expand=False, padx=(0, 10))
+        frame_izq.pack_propagate(False)
+
+        # Panel de controles (sin cambios)
         frame_controles = ttk.LabelFrame(frame_izq, text=" Controles de Análisis", padding=10)
         frame_controles.pack(fill="x", pady=(0, 10))
 
         # Sección de carga de datos
         ttk.Label(frame_controles, text="Carga de Datos:", font=("Segoe UI", 9, "bold")).pack(anchor="w", pady=(0, 5))
         ttk.Button(frame_controles, text=" Cargar Datos Automáticos",
-                   command=self.cargar_datos, style="Accent.TButton").pack(fill="x", pady=2)
+                  command=self.cargar_datos, style="Accent.TButton").pack(fill="x", pady=2)
         ttk.Button(frame_controles, text=" Seleccionar CSV Manualmente",
-                   command=self.cargar_csv_manual).pack(fill="x", pady=2)
+                  command=self.cargar_csv_manual).pack(fill="x", pady=2)
 
         ttk.Separator(frame_controles, orient='horizontal').pack(fill="x", pady=5)
 
         # Sección de análisis de crecimiento
-        ttk.Label(frame_controles, text="Análisis de Crecimiento PIB:", font=("Segoe UI", 9, "bold")).pack(anchor="w",
-                                                                                                           pady=(0, 5))
+        ttk.Label(frame_controles, text="Análisis de Crecimiento PIB:", font=("Segoe UI", 9, "bold")).pack(anchor="w", pady=(0, 5))
         ttk.Button(frame_controles, text=" Ejecutar Análisis Completo",
-                   command=self.analizar_crecimiento_completo).pack(fill="x", pady=2)
+                  command=self.analizar_crecimiento_completo).pack(fill="x", pady=2)
         ttk.Button(frame_controles, text=" Generar Reporte",
-                   command=self.generar_reporte_crecimiento).pack(fill="x", pady=2)
+                  command=self.generar_reporte_crecimiento).pack(fill="x", pady=2)
 
         ttk.Separator(frame_controles, orient='horizontal').pack(fill="x", pady=5)
 
         # Sección de análisis de inflación
-        ttk.Label(frame_controles, text="Análisis de Inflación:", font=("Segoe UI", 9, "bold")).pack(anchor="w",
-                                                                                                     pady=(0, 5))
+        ttk.Label(frame_controles, text="Análisis de Inflación:", font=("Segoe UI", 9, "bold")).pack(anchor="w", pady=(0, 5))
         ttk.Button(frame_controles, text=" Analizar Inflación y PIB Real",
-                   command=self.analizar_inflacion).pack(fill="x", pady=2)
+                  command=self.analizar_inflacion).pack(fill="x", pady=2)
         ttk.Button(frame_controles, text=" Generar Reporte Inflación",
-                   command=self.generar_reporte_inflacion).pack(fill="x", pady=2)
+                  command=self.generar_reporte_inflacion).pack(fill="x", pady=2)
 
         ttk.Separator(frame_controles, orient='horizontal').pack(fill="x", pady=5)
 
-        # Sección de análisis de tasa de crecimiento (nueva)
-        ttk.Label(frame_controles, text="Análisis de Tasa de Crecimiento:", font=("Segoe UI", 9, "bold")).pack(
-            anchor="w", pady=(0, 5))
+        # Sección de análisis de tasa de crecimiento
+        ttk.Label(frame_controles, text="Análisis de Tasa de Crecimiento:", font=("Segoe UI", 9, "bold")).pack(anchor="w", pady=(0, 5))
         ttk.Button(frame_controles, text=" Consultar Tasa de Crecimiento",
-                   command=self.consultar_tasa_crecimiento).pack(fill="x", pady=2)
+                  command=self.consultar_tasa_crecimiento).pack(fill="x", pady=2)
         ttk.Button(frame_controles, text=" Evolución del PIB",
-                   command=self.evolucion_pib).pack(fill="x", pady=2)
+                  command=self.evolucion_pib).pack(fill="x", pady=2)
         ttk.Button(frame_controles, text=" Estadísticas Promedio",
-                   command=self.estadisticas_promedio).pack(fill="x", pady=2)
+                  command=self.estadisticas_promedio).pack(fill="x", pady=2)
 
         # Panel para entrada de años
         frame_periodo = ttk.Frame(frame_controles)
@@ -111,52 +135,53 @@ class InterfazAnalisisPIB:
         self.entry_fin.pack(side="left", padx=5)
 
         ttk.Button(frame_controles, text=" Graficar por Período",
-                   command=self.graficar_por_periodo).pack(fill="x", pady=2)
+                  command=self.graficar_por_periodo).pack(fill="x", pady=2)
 
         # Panel de salida de texto
         frame_salida = ttk.LabelFrame(frame_izq, text=" Salida de Análisis", padding=5)
         frame_salida.pack(fill="both", expand=True)
 
         self.text_output = ScrolledText(frame_salida, wrap="word", width=65, height=30,
-                                        font=("Consolas", 9), bg="#2b2b2b", fg="#ffffff",
-                                        insertbackground="white")
+                                       font=("Consolas", 9), bg="#2b2b2b", fg="#ffffff",
+                                       insertbackground="white")
         self.text_output.pack(fill="both", expand=True)
 
-        # === Panel derecho: visualizaciones ===
-        frame_der = ttk.Frame(self.frame_principal)
+        # === Panel derecho: visualizaciones (ÁREA QUE SE LIMPIARÁ) ===
+        frame_der = ttk.Frame(self.frame_contenedor)
         frame_der.pack(side="right", fill="both", expand=True)
 
-        # Panel de visualización
+        # Panel de visualización (este es el que se limpia)
         frame_viz = ttk.LabelFrame(frame_der, text=" Visualización Gráfica", padding=5)
         frame_viz.pack(fill="both", expand=True)
 
         self.frame_grafico = ttk.Frame(frame_viz)
         self.frame_grafico.pack(fill="both", expand=True)
 
-        # Panel de estado
-        frame_estado = ttk.Frame(frame_der)
-        frame_estado.pack(fill="x", pady=(5, 0))
-
-        self.label_estado = ttk.Label(frame_estado, text="Estado: Esperando carga de datos...",
-                                      foreground="red", font=("Segoe UI", 9, "bold"))
-        self.label_estado.pack(side="left")
-
-        ttk.Button(frame_estado, text="🧹 Limpiar Todo",
-                   command=self.limpiar_todo).pack(side="right", padx=5)
-        ttk.Button(frame_estado, text=" Guardar Gráfico",
-                   command=self.guardar_grafico).pack(side="right", padx=5)
-        ttk.Button(frame_estado, text=" Salir",
-                   command=self.root.destroy).pack(side="right", padx=5)
-
     def configurar_estilos(self):
         """Configura los estilos de la interfaz"""
         style = ttk.Style()
-        style.configure("TButton", font=("Segoe UI", 9), padding=6)
-        style.configure("Accent.TButton", font=("Segoe UI", 10, "bold"))
-        style.configure("TLabel", font=("Segoe UI", 9))
-        style.configure("TLabelframe", font=("Segoe UI", 10, "bold"))
-        style.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))
-        style.configure("TFrame", background="#f4f6f8")
+        style.theme_use('clam')
+        
+        # Configurar colores y estilos
+        style.configure('TFrame', background='#f4f6f8')
+        style.configure('TLabel', background='#f4f6f8', font=('Segoe UI', 9))
+        style.configure('TButton', font=('Segoe UI', 9), padding=6)
+        style.configure('Accent.TButton', background='#3498db', foreground='white')
+        style.configure('TLabelframe', background='#f4f6f8', font=('Segoe UI', 9, 'bold'))
+        style.configure('TLabelframe.Label', background='#f4f6f8', font=('Segoe UI', 9, 'bold'))
+
+    def limpiar_todo(self):
+        """Limpia el área de visualización pero mantiene los controles"""
+        # Solo limpia el frame de gráficos, no los controles superiores
+        for widget in self.frame_grafico.winfo_children():
+            widget.destroy()
+        
+        self.text_output.delete(1.0, tk.END)
+        self.label_estado.config(text="Estado: Limpiado", foreground="orange")
+        
+        # Limpiar referencias
+        self.figura_actual = None
+        self.canvas_actual = None
 
     # ======================
     # FUNCIONES DE CARGA DE DATOS
@@ -569,7 +594,7 @@ class InterfazAnalisisPIB:
     def _ajustar_figura(self, fig):
         """Ajusta una figura para que quepa mejor en la interfaz"""
         try:
-            fig.set_size_inches(10, 8)
+            fig.set_size_inches(9, 7)
             fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
             for ax in fig.get_axes():
