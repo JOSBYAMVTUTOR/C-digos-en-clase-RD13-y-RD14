@@ -10,9 +10,13 @@
 
  Integrante 
 **José Cohn** 
+
 **Anderson Ellian Reyes** 
-**Claiby** | Data Scientist 
+
+**Claiby**
+
 **Gerald Ogando Encarnación** 
+
 **Luis Roberto Medina** 
 
 ---
