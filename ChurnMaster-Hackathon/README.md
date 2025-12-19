@@ -6,7 +6,7 @@
 
 ---
 
-##Equipo
+## Equipo
 
  Integrante 
 **José Cohn** 
