@@ -1,0 +1,41 @@
+{
+  "documentos": [
+    {
+      "id": 1,
+      "nombre_original": "Ley núm. 1-25.pdf",
+      "nombre_archivo": "doc_0001.pdf",
+      "ruta": "data_demo\\documentos\\Factura\\doc_0001.pdf",
+      "categoria": "Factura",
+      "confianza": 0.4,
+      "fecha_subida": "2025-12-19 10:47:57",
+      "tamaño_kb": 2869.41,
+      "extension": ".pdf",
+      "texto_extraido": "n\nEL CONGRESO NACIONAL\nEN NOMBRE DE LA REPÚBLICA\nLey num. 1-25   \nLey que modifica la Ley núm.138-11, del 21 de junio de 2011,\nLey Orgánica\ndel Consejo Nacional\nde\nla Magistratura\nQue\nel\nConsejo\nNacional\nde\nla\nMagistratura\nes\nel\nConsiderando\nprimero:\nórgano\nconstitucional,\nintegrado\nde\nforma\nplural,\ncon\nla\nfunción\nde\ndesignar\na\nlos\njueces\nde\nla\nSuprema\nCorte\nde\nJusticia,\nlos\ndel\nTribunal\nConstitucional,\nlos\ndel\nTribunal\nSuperior Electoral\ny\nsus\nsuplentes\ny al\nprocuradores\nProcurador\nGeneral\nde\nl"
+    },
+    {
+      "id": 2,
+      "nombre_original": "personal.jpeg",
+      "nombre_archivo": "doc_0002.jpeg",
+      "ruta": "data_demo\\documentos\\Otros\\doc_0002.jpeg",
+      "categoria": "Otros",
+      "confianza": 0.3,
+      "fecha_subida": "2025-12-19 11:26:10",
+      "tamaño_kb": 43.29,
+      "extension": ".jpeg",
+      "texto_extraido": "Error al extraer texto: C:\\Program Files\\Tesseract-OCR\\tesseract.exe is not installed or it's not in your PATH. See README file for more information."
+    },
+    {
+      "id": 3,
+      "nombre_original": "Ley núm. 1-25.pdf",
+      "nombre_archivo": "doc_0003.pdf",
+      "ruta": "data_demo\\documentos\\Leyes y normativas\\doc_0003.pdf",
+      "categoria": "Leyes y normativas",
+      "confianza": 0.99,
+      "fecha_subida": "2025-12-19 11:27:00",
+      "tamaño_kb": 2869.41,
+      "extension": ".pdf",
+      "texto_extraido": "n\nEL CONGRESO NACIONAL\nEN NOMBRE DE LA REPÚBLICA\nLey num. 1-25   \nLey que modifica la Ley núm.138-11, del 21 de junio de 2011,\nLey Orgánica\ndel Consejo Nacional\nde\nla Magistratura\nQue\nel\nConsejo\nNacional\nde\nla\nMagistratura\nes\nel\nConsiderando\nprimero:\nórgano\nconstitucional,\nintegrado\nde\nforma\nplural,\ncon\nla\nfunción\nde\ndesignar\na\nlos\njueces\nde\nla\nSuprema\nCorte\nde\nJusticia,\nlos\ndel\nTribunal\nConstitucional,\nlos\ndel\nTribunal\nSuperior Electoral\ny\nsus\nsuplentes\ny al\nprocuradores\nProcurador\nGeneral\nde\nl"
+    }
+  ],
+  "ultimo_id": 3
+}
