@@ -1,0 +1,34 @@
+[
+    {
+        "id": "2",
+        "name": "prueba 2",
+        "source": "rtsp://localhost:8554/webcam",
+        "type": "rtsp",
+        "enabled": false,
+        "config": {
+            "name": "prueba 2",
+            "type": "rtsp",
+            "ip": "localhost",
+            "port": "8554",
+            "user": "",
+            "password": "",
+            "path": "/webcam"
+        }
+    },
+    {
+        "id": "3",
+        "name": "prueba",
+        "source": "rtsp://716f898c7b71.entrypoint.cloud.wowza.com:1935/app-8F9K44lJ/304679fe_stream2",
+        "type": "rtsp",
+        "enabled": false,
+        "config": {
+            "name": "prueba",
+            "type": "rtsp",
+            "ip": "716f898c7b71.entrypoint.cloud.wowza.com",
+            "port": "1935",
+            "user": "",
+            "password": "",
+            "path": "/app-8F9K44lJ/304679fe_stream2"
+        }
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "date": "2025-12-18 15:36:30",
+        "camera": "C\u00e1mara 4",
+        "event": "Ca\u00edda detectada",
+        "status": "Enviado",
+        "details": "6889078618: OK, -5004612502: OK",
+        "snapshot": "snapshots\\alert_4_1766086587.jpg",
+        "id": "c9d0906e-23fa-402b-8e13-c966d9f73934"
+    },
+    {
+        "date": "2025-12-18 16:18:43",
+        "camera": "C\u00e1mara 4",
+        "event": "Ca\u00edda detectada",
+        "status": "Enviado",
+        "details": "6889078618: OK, -5004612502: OK",
+        "snapshot": "snapshots\\alert_4_1766089119.jpg",
+        "id": "0e823e6e-20bd-4114-9927-82e5042ae540"
+    }
+]
