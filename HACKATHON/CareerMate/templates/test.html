@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-tabs">
+                <a href="{{ url_for('test') }}" class="nav-tab active">Test</a>
+                <a href="{{ url_for('estadisticas') }}" class="nav-tab">Estadísticas</a>
+            </div>
+        </nav>
+
+        <div class="quiz-screen">
+            <h2 class="quiz-title">
+                Cuestionario de Orientación Vocacional
+            </h2>
+
+            <form method="POST" action="{{ url_for('procesar_test') }}" id="testForm">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%" id="progressFill"></div>
+                </div>
+
+                <div id="questionsContainer">
+                    {% for pregunta in preguntas %}
+                    <div class="pregunta" id="pregunta-{{ pregunta.id }}">
+                        <div class="question-counter">
+                            Pregunta {{ pregunta.id + 1 }} de {{ preguntas|length }}
+                        </div>
+                        
+                        <h3 class="question-text">{{ pregunta.texto }}</h3>
+                        
+                        <div class="options">
+                            {% for opcion in pregunta.opciones %}
+                            <label class="option">
+                                <input type="radio" 
+                                       name="respuesta_{{ pregunta.id }}" 
+                                       value="{{ loop.index0 }}" 
+                                       required>
+                                <span>{{ opcion.texto if opcion.texto is defined else opcion }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="button-group">
+                    <a href="{{ url_for('estadisticas') }}" class="btn-secondary">← Ver Estadísticas</a>
+                    <button type="submit" class="btn-primary">Enviar Test →</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

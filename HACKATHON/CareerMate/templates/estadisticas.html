@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - Estadísticas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-tabs">
+                <a href="{{ url_for('test') }}" class="nav-tab">Test</a>
+                <a href="{{ url_for('estadisticas') }}" class="nav-tab active">Estadísticas</a>
+            </div>
+        </nav>
+
+        <div class="stats-screen">
+            <h2>Estadísticas de Tus Tests</h2>
+
+            {% if estadisticas.total_tests == 0 %}
+            <div class="empty-state">
+                <p>No hay datos aún. ¡Completa tu primer test para ver estadísticas!</p>
+                <a href="{{ url_for('test') }}" class="btn-primary">Comenzar Test</a>
+            </div>
+            {% else %}
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value">{{ estadisticas.total_tests }}</div>
+                    <div class="stat-label">Tests Completados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ estadisticas.compatibilidad_promedio }}%</div>
+                    <div class="stat-label">Compatibilidad Promedio</div>
+                </div>
+                {% if estadisticas.carrera_popular %}
+                <div class="stat-card">
+                    <div class="stat-value">{{ estadisticas.carrera_popular.split(' ')[0] }}</div>
+                    <div class="stat-label">Carrera Más Popular</div>
+                </div>
+                {% endif %}
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Tasa de Completación</div>
+                </div>
+            </div>
+
+            <h3 class="section-title">Estadísticas por Carrera</h3>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th class="text-center">Recomendaciones</th>
+                        <th class="text-center">Compatibilidad Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for carrera in carreras %}
+                    <tr>
+                        <td>{{ carrera }}</td>
+                        <td class="text-center"><strong>{{ estadisticas.por_carrera[carrera].count }}</strong></td>
+                        <td class="text-center">{{ estadisticas.por_carrera[carrera].promedio }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3 class="section-title">Historial de Tests</h3>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Carrera 1</th>
+                            <th class="text-center">Compat.</th>
+                            <th>Carrera 2</th>
+                            <th class="text-center">Compat.</th>
+                            <th>Carrera 3</th>
+                            <th class="text-center">Compat.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test in historial|reverse %}
+                        <tr>
+                            <td class="text-small">{{ test.fecha[:10] }} {{ test.fecha[11:16] }}</td>
+                            <td>{{ test.carreras[0] }}</td>
+                            <td class="text-center"><span class="badge badge-success">{{ test.compatibilidades[0] }}%</span></td>
+                            <td>{{ test.carreras[1] }}</td>
+                            <td class="text-center"><span class="badge badge-info">{{ test.compatibilidades[1] }}%</span></td>
+                            <td>{{ test.carreras[2] if test.carreras|length > 2 else '-' }}</td>
+                            <td class="text-center">
+                                {% if test.compatibilidades|length > 2 %}
+                                <span class="badge badge-purple">{{ test.compatibilidades[2] }}%</span>
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="stats-actions">
+                <a href="{{ url_for('test') }}" class="btn-primary">Hacer Otro Test</a>
+                <form method="POST" action="{{ url_for('limpiar_historial') }}" class="inline-form">
+                    <button type="submit" class="btn-secondary" onclick="return confirm('¿Estás seguro de que quieres limpiar todo el historial?');">
+                        Limpiar Historial
+                    </button>
+                </form>
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

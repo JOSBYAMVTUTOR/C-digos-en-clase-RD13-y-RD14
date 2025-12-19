@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }} - Resultados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-tabs">
+                <a href="{{ url_for('test') }}" class="nav-tab">Test</a>
+                <a href="{{ url_for('estadisticas') }}" class="nav-tab">Estadísticas</a>
+            </div>
+        </nav>
+
+        <div class="results-screen">
+            <h2>Tu Perfil Profesional</h2>
+            <p class="results-subtitle">
+                Carreras recomendadas según tus habilidades e intereses
+            </p>
+
+            <div class="recommendations">
+                {% for recomendacion in recomendaciones %}
+                <div class="career-card">
+                    <div class="career-header">
+                        <span class="career-badge">#{{ loop.index }}</span>
+                        <span class="career-eje">{{ recomendacion.eje_nombre }}</span>
+                    </div>
+                    
+                    <div class="career-info">
+                        <div class="career-name">{{ recomendacion.carrera }}</div>
+                        
+                        <div class="compatibility">
+                            <div class="compatibility-bar">
+                                <div class="compatibility-fill" style="width: {{ recomendacion.compatibilidad }}%"></div>
+                            </div>
+                            <div class="compatibility-text">{{ recomendacion.compatibilidad }}%</div>
+                        </div>
+                        
+                        <div class="career-description">
+                            {{ recomendacion.descripcion }}
+                        </div>
+
+                        {% if recomendacion.razones %}
+                        <div class="career-reasons">
+                            <strong>¿Por qué esta carrera?</strong>
+                            <ul>
+                                {% for razon in recomendacion.razones[:3] %}
+                                <li>{{ razon }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="results-footer">
+                <p class="results-date">
+                    Fecha del test: {{ fecha.strftime('%d/%m/%Y %H:%M') }}
+                </p>
+                <div class="results-actions">
+                    <a href="{{ url_for('test') }}" class="btn-primary">Hacer Otro Test</a>
+                    <a href="{{ url_for('estadisticas') }}" class="btn-secondary">Ver Estadísticas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
