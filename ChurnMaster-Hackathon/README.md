@@ -8,13 +8,12 @@
 
 ##Equipo
 
-| Integrante | Rol | Funciones Principales |
-| :--- | :--- | :--- |
-| **José Cohn** 
-| **Anderson Ellian Reyes** 
-| **Claiby** | Data Scientist 
-| **Gerald Ogando Encarnación** 
-| **Luis Roberto Medina** 
+ Integrante 
+**José Cohn** 
+**Anderson Ellian Reyes** 
+**Claiby** | Data Scientist 
+**Gerald Ogando Encarnación** 
+**Luis Roberto Medina** 
 
 ---
 
