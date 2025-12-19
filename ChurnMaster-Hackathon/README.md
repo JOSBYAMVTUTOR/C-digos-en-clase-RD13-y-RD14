@@ -37,7 +37,7 @@ Implementamos un ensamble de modelos (**Random Forest**, **XGBoost**, **LightGBM
 
 ---
 
-##  Herramientas y Tecnologías (Tech Stack)
+##  Herramientas y Tecnologías
 
 El proyecto utiliza un stack robusto de Python para Ciencia de Datos y MLOps:
 
